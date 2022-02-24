@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         userID = fauth.getCurrentUser().getUid();
 
+        //read in DATABASE
         DocumentReference documentReference = fstore.collection("users").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override

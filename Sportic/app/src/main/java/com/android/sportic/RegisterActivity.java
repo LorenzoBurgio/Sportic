@@ -82,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this,"User Created.",Toast.LENGTH_SHORT).show();
                             userID = fauth.getCurrentUser().getUid();
+                            //Write in DATABASE
                             DocumentReference documentReference = fstore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
                             user.put("name",Name);
