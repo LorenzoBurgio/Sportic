@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         fauth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
         TextView print = (TextView) findViewById(R.id.Print);
@@ -43,10 +46,24 @@ public class MainActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                print.setText("Welcome " + value.getString("name"));
+                if(error != null)
+                {
+                    Log.d("DocumentSnapshot","Error:"+error.getMessage());
+                }
+                else {
+                    print.setText("Welcome " + value.getString("name"));
+                }
             }
         });
 
+    }
+
+    public void Event(View view){
+        startActivity(new Intent(getApplicationContext(),EventList.class));
+    }
+
+    public void CreateEvent(View view){
+        startActivity(new Intent(getApplicationContext(),CreateActivity.class));
     }
 
     public void logout (View view){
