@@ -26,15 +26,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class CreateActivity extends AppCompatActivity{
 
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
     String userID;
 
     Button create;
-    EditText name;
+    EditText name, adress, postalCode, city;
     Spinner levels;
+    Spinner SportChoice;
+    String level;
+    String sport;
 
 
     @Override
@@ -48,11 +51,21 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
         create = (Button) findViewById(R.id.CreateButton);
         name = findViewById(R.id.Name);
+        adress = findViewById(R.id.adress);
+        city = findViewById(R.id.City);
+        postalCode = findViewById(R.id.Postal_Code);
+
         levels = (Spinner) findViewById(R.id.Levels);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.level, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         levels.setAdapter(adapter);
-        levels.setOnItemSelectedListener(this);
+
+
+        SportChoice = (Spinner) findViewById(R.id.SportChoice);
+        ArrayAdapter<CharSequence> Sportadapter = ArrayAdapter.createFromResource(this, R.array.Sport, android.R.layout.simple_spinner_item);
+        Sportadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SportChoice.setAdapter(Sportadapter);
+
 
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -60,15 +73,36 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
 
                 String Name = name.getText().toString().trim();
+                String Adress = adress.getText().toString().trim();
+                String City = city.getText().toString().trim();
+                String Postalcode = postalCode.getText().toString().trim();
 
                 if (TextUtils.isEmpty(Name)){
                     name.setError("Name is required");
+                    return;
+                }
+                if (TextUtils.isEmpty(Adress)){
+                    adress.setError("adress is required");
+                    return;
+                }
+                if (TextUtils.isEmpty(City)){
+                    city.setError("city is required");
+                    return;
+                }
+                if (TextUtils.isEmpty(Postalcode)){
+                    postalCode.setError("Postal Code is required");
                     return;
                 }
 
                 DocumentReference documentReference = fstore.collection("Event").document(Name);
                 Map<String,Object> event = new HashMap<>();
                 event.put("name",Name);
+                event.put("adress",Adress);
+                event.put("city",City);
+                event.put("postalCode",Postalcode);
+                event.put("sport",sport);
+                event.put("level",level);
+
                 documentReference.set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -82,16 +116,34 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
+        SportChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                sport = parentView.getItemAtPosition(position).toString();
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+
+            }
+        });
+
+        levels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                level = parentView.getItemAtPosition(position).toString();
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+
+            }
+        });
+
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }
