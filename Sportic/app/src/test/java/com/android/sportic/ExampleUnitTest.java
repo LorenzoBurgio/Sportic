@@ -1,4 +1,4 @@
-package ie.ul.sportic;
+package com.android.sportic;
 
 import org.junit.Test;
 
