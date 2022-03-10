@@ -3,6 +3,7 @@ package com.android.sportic;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
 
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish(); 
+    }
+
+    public void Sport(View view) {
+        startActivity(new Intent(getApplicationContext(), SportList.class));
     }
 
 }

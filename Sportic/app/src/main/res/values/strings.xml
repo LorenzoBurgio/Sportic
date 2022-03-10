@@ -21,7 +21,27 @@
         <item>Kayak</item>
         <item>Soccer</item>
         <item>Swimming</item>
+        <item>Tennis</item>
         <item>Rugby</item>
         <item>Ultimate</item>
+    </string-array>
+
+    <string-array name="Tag">
+        <item>archery</item>
+        <item>badminton</item>
+        <item>basketball</item>
+        <item>boxing</item>
+        <item>bowling</item>
+        <item>cycling</item>
+        <item>gaelic_football</item>
+        <item>golf</item>
+        <item>handball</item>
+        <item>hurling</item>
+        <item>kayak</item>
+        <item>soccer</item>
+        <item>swimming</item>
+        <item>tennis</item>
+        <item>rugby</item>
+        <item>ultimate</item>
     </string-array>
 </resources>

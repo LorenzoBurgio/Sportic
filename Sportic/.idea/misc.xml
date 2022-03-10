@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_create.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_event_list.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_login.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_sport_event.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_sport_event_list.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/activity_sport_list.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/maxen/Sportic/Sportic/app/src/main/res/layout/adapter_sport.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/activity_create.xml" value="0.24852657594542577" />
         <entry key="app/src/main/res/layout/activity_event_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2033514492753623" />

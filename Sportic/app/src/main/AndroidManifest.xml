@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".SportEventList"
+            android:exported="false" />
+        <activity
+            android:name=".SportList"
+            android:exported="false" />
+        <activity
             android:name=".EventList"
             android:exported="false" />
         <activity
