@@ -2,6 +2,8 @@ package com.android.sportic;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,12 +18,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +78,7 @@ public class CreateActivity extends AppCompatActivity{
         SportChoice.setAdapter(Sportadapter);
 
 
-
+        //create An Activity
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +88,7 @@ public class CreateActivity extends AppCompatActivity{
                 String City = city.getText().toString().trim();
                 String Postalcode = postalCode.getText().toString().trim();
 
+                //Look if all the EditText is not empty
                 if (TextUtils.isEmpty(Name)){
                     name.setError("Name is required");
                     return;
@@ -94,6 +106,7 @@ public class CreateActivity extends AppCompatActivity{
                     return;
                 }
 
+                //WRITE in DATABASE
                 DocumentReference documentReference = fstore.collection("Event").document(Name);
                 Map<String,Object> event = new HashMap<>();
                 event.put("name",Name);
@@ -102,6 +115,8 @@ public class CreateActivity extends AppCompatActivity{
                 event.put("postalCode",Postalcode);
                 event.put("sport",sport);
                 event.put("level",level);
+                event.put("message",0);
+
 
                 documentReference.set(event).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -110,11 +125,32 @@ public class CreateActivity extends AppCompatActivity{
                     }
                 });
 
+                fstore.collection("users").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        Map<String,Object> user = new HashMap<>();
+                        user.put("name",value.getString("name"));
+                        documentReference.collection("Participants").document(userID).set(user);
+                    }
+                });
+                Map<String,Object> MyEvent = new HashMap<>();
+                MyEvent.put("name",Name);
+                fstore.collection("users").document(userID).collection("MyEvent").document(Name).set(MyEvent);
+
+
+
+
+
+
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
 
+
+
             }
         });
+
+
 
         SportChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 

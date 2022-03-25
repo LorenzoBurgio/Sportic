@@ -12,6 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".EventPage"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_login2" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".EventList"
             android:exported="false" />
         <activity

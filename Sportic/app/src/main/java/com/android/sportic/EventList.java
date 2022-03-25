@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -59,6 +61,18 @@ public class EventList extends AppCompatActivity {
         InitializeFields();
 
         RetrieveAndDisplayEvent();
+
+
+        List_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String EventName = adapterView.getItemAtPosition(i).toString();
+                Intent Event = new Intent(getApplicationContext(),EventPage.class);
+                Event.putExtra("EventName",EventName);
+                startActivity(Event);
+            }
+        });
+
     }
 
 
@@ -89,10 +103,9 @@ public class EventList extends AppCompatActivity {
                 while (iterator.hasNext())
                 {
                     String data = ((QueryDocumentSnapshot)iterator.next()).getId();
-                    Log.e(TAG,"event :" + data);
                     set.add(data);
                 }
-                Log.e(TAG,"Finish");
+
 
 
                 List_of_groups.clear();
