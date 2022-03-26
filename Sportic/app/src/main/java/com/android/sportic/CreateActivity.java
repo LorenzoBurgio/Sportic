@@ -7,17 +7,29 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,27 +46,41 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class CreateActivity extends AppCompatActivity{
+public class CreateActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
     String userID;
 
     Button create;
-    EditText name, adress, postalCode, city;
+    EditText name, adress;
     Spinner levels;
     Spinner SportChoice;
     String level;
     String sport;
+    String CompleteAdress;
+
+    List<Marker> markers;
+
+    double longitude;
+    double latitude;
+
+    private GoogleMap mMap;
+    private final float DEFAULT_ZOOM = 15f;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+
+        markers = new ArrayList<>();
 
         fauth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -63,8 +89,6 @@ public class CreateActivity extends AppCompatActivity{
         create = (Button) findViewById(R.id.CreateButton);
         name = findViewById(R.id.Name);
         adress = findViewById(R.id.adress);
-        city = findViewById(R.id.City);
-        postalCode = findViewById(R.id.Postal_Code);
 
         levels = (Spinner) findViewById(R.id.Levels);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.level, android.R.layout.simple_spinner_item);
@@ -77,6 +101,19 @@ public class CreateActivity extends AppCompatActivity{
         Sportadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         SportChoice.setAdapter(Sportadapter);
 
+        initMap();
+
+        adress.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH || i == EditorInfo.IME_ACTION_DONE || keyEvent.getAction() == KeyEvent.ACTION_DOWN || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER)
+                {
+                    geolocate();
+                }
+                return false;
+            }
+        });
+
 
         //create An Activity
         create.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +122,7 @@ public class CreateActivity extends AppCompatActivity{
 
                 String Name = name.getText().toString().trim();
                 String Adress = adress.getText().toString().trim();
-                String City = city.getText().toString().trim();
-                String Postalcode = postalCode.getText().toString().trim();
+
 
                 //Look if all the EditText is not empty
                 if (TextUtils.isEmpty(Name)){
@@ -97,24 +133,18 @@ public class CreateActivity extends AppCompatActivity{
                     adress.setError("adress is required");
                     return;
                 }
-                if (TextUtils.isEmpty(City)){
-                    city.setError("city is required");
-                    return;
-                }
-                if (TextUtils.isEmpty(Postalcode)){
-                    postalCode.setError("Postal Code is required");
-                    return;
-                }
+
 
                 //WRITE in DATABASE
                 DocumentReference documentReference = fstore.collection("Event").document(Name);
                 Map<String,Object> event = new HashMap<>();
                 event.put("name",Name);
                 event.put("adress",Adress);
-                event.put("city",City);
-                event.put("postalCode",Postalcode);
                 event.put("sport",sport);
                 event.put("level",level);
+                event.put("longitude",longitude);
+                event.put("latitude",latitude);
+                event.put("adress",CompleteAdress);
                 event.put("message",0);
 
 
@@ -137,15 +167,8 @@ public class CreateActivity extends AppCompatActivity{
                 MyEvent.put("name",Name);
                 fstore.collection("users").document(userID).collection("MyEvent").document(Name).set(MyEvent);
 
-
-
-
-
-
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
-
-
 
             }
         });
@@ -182,4 +205,55 @@ public class CreateActivity extends AppCompatActivity{
 
     }
 
+    private void geolocate() {
+        String Search = adress.getText().toString();
+        Geocoder geocoder = new Geocoder(CreateActivity.this);
+         List<Address> list = new ArrayList<>();
+        try {
+            list = geocoder.getFromLocationName(Search,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(list.size() > 0){
+            Address adress = list.get(0);
+            Log.e("intiMap","find a location" + adress.toString());
+            LatLng latLng = new LatLng(adress.getLatitude(),adress.getLongitude());
+            MoveCamera(latLng,DEFAULT_ZOOM);
+
+            longitude = adress.getLongitude();
+            latitude = adress.getLatitude();
+            CompleteAdress = adress.getAddressLine(0);
+
+            if (markers.size() >0)
+            {
+                markers.get(0).remove();
+                markers.remove(0);
+            }
+
+            MarkerOptions options = new MarkerOptions().position(latLng);
+            Marker marker = mMap.addMarker(options);
+            markers.add(marker);
+
+
+
+        }
+    }
+
+    private void MoveCamera(LatLng latLng, float Zoom){
+        Log.d("GetLocationDevice","Moving the camera to lat: " + latLng.latitude+", lng: " + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, Zoom));
+
+    }
+
+    private void initMap(){
+        Log.e("intiMap","Map initialisation");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.CreateMap);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+    }
 }

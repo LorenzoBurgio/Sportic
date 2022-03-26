@@ -1,5 +1,6 @@
 package com.android.sportic;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,7 +38,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class EventPage extends AppCompatActivity {
+public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
 
     private Button chat;
     private Button EventJoin;
@@ -39,6 +47,9 @@ public class EventPage extends AppCompatActivity {
     private TextView EventAdress;
     private TextView EventSport;
     private TextView EventLevel;
+
+    private GoogleMap mMap;
+    private final float DEFAULT_ZOOM = 15f;
 
     private ListView EventParticipant;
     ArrayAdapter<String> arrayAdapter;
@@ -55,6 +66,7 @@ public class EventPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_page);
+        initMap();
 
         EventName = getIntent().getExtras().get("EventName").toString();
 
@@ -85,8 +97,14 @@ public class EventPage extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 EventSport.setText(value.getString("sport"));
                 EventLevel.setText("Level: " + value.getString("level"));
-                String adress = "Adress: " + value.getString("adress")+ ", "+ value.getString("city")+  ", "+ value.getString("postalCode");
+                String adress = "Adress: " + value.getString("adress");
                 EventAdress.setText(adress);
+
+                LatLng latLng = new LatLng(value.getDouble("latitude"),value.getDouble("longitude"));
+                MoveCamera(latLng,DEFAULT_ZOOM);
+
+                MarkerOptions options = new MarkerOptions().position(latLng).title(adress);
+                Marker marker = mMap.addMarker(options);
             }
         });
 
@@ -151,5 +169,22 @@ public class EventPage extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void MoveCamera(LatLng latLng, float Zoom){
+        Log.d("GetLocationDevice","Moving the camera to lat: " + latLng.latitude+", lng: " + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, Zoom));
+
+    }
+
+    private void initMap(){
+        Log.e("intiMap","Map initialisation");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.EventMap);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
     }
 }
