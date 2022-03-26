@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Event(View view){
-        startActivity(new Intent(getApplicationContext(),EventList.class));
+        startActivity(new Intent(getApplicationContext(),Event.class));
     }
 
     public void CreateEvent(View view){

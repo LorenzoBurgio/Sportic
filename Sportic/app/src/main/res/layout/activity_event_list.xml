@@ -7,7 +7,7 @@
     tools:context=".EventList">
 
     <ListView
-        android:id="@+id/list_view"
+        android:id="@+id/list_view2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
