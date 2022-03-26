@@ -7,10 +7,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,11 +58,15 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
     String userID;
+    String Event = null;
+    Button seeEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        seeEvent = (Button) findViewById(R.id.ViewEvent);
 
         markers = new ArrayList<>();
 
@@ -70,6 +78,24 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
         getLocationPermition();
 
         PrintAllEvent();
+
+        seeEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Event != null)
+                {
+                    Toast.makeText(SearchActivity.this, Event,Toast.LENGTH_SHORT).show();
+                    Intent event = new Intent(getApplicationContext(),EventPage.class);
+                    event.putExtra("EventName",Event);
+                    startActivity(event);
+                }
+                else{
+                    Toast.makeText(SearchActivity.this, "Choose an Event",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
 
     private void MoveCamera(LatLng latLng, float Zoom){
@@ -83,7 +109,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
         if(mLocationPermissionGranted)
         {
-            Task<Location> location = mFusedLocationProviderClient.getLastLocation();
+            @SuppressLint("MissingPermission") Task<Location> location = mFusedLocationProviderClient.getLastLocation();
             location.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
@@ -171,7 +197,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
                     Double longitude = doc.getDouble("longitude");
                     Double latitude = doc.getDouble("latitude");
                     Log.e("longitude", String.valueOf(longitude));
-                    String Name = doc.getString("name") + ": " + doc.getString("adress");
+                    String Name = doc.getString("name");
                     Log.e("Name",Name);
 
                     LatLng latLng = new LatLng(latitude,longitude);
@@ -188,6 +214,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
@@ -205,5 +232,15 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
             GetDeviceLocation();
             mMap.setMyLocationEnabled(true);
         }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                Event = marker.getTitle();
+                Log.e("OnMarkerListener",Event);
+
+                return false;
+            }
+        });
     }
 }
