@@ -64,14 +64,15 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/firstName"
+        <EditText
+            android:id="@+id/editfirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:text="John"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </LinearLayout>
@@ -108,14 +109,15 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/lastName"
+        <EditText
+            android:id="@+id/editlastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Doe"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </LinearLayout>
@@ -152,14 +154,15 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/location"
+        <EditText
+            android:id="@+id/editlocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:text="Upside Down"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </LinearLayout>
@@ -200,7 +203,7 @@
             android:drawableLeft="@drawable/ic_edit"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:text="Edit Profile"
+            android:text="Validate Profile"
             android:textColor="@color/purple_200"
             android:textSize="18dp"
             tools:layout_conversion_absoluteHeight="50dp"
@@ -209,7 +212,7 @@
             tools:layout_editor_absoluteY="558dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/validateProfile"
             android:layout_width="145dp"
             android:layout_height="26dp"
             android:backgroundTintMode="screen"
