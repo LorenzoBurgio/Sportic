@@ -71,9 +71,11 @@ public class FriendChat extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null){
                     MessageLocationId = value.getString("message");
-                    Log.e("MessageId: ",MessageLocationId);
-                    test(MessageLocationId);
-                    Start(MessageLocationId);
+                    if(MessageLocationId != null) {
+                        Log.e("MessageId: ", MessageLocationId);
+                        test(MessageLocationId);
+                        Start(MessageLocationId);
+                    }
                 }
             }
         });
@@ -87,7 +89,7 @@ public class FriendChat extends AppCompatActivity {
                     Log.d("DocumentSnapshot","Error:"+error.getMessage());
                 }
                 else {
-                    userName = value.getString("name");
+                    userName = value.getString("pseudo");
                 }
             }
         });

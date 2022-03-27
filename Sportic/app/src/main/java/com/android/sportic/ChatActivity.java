@@ -109,7 +109,7 @@ public class ChatActivity extends AppCompatActivity {
                     Log.d("DocumentSnapshot","Error:"+error.getMessage());
                 }
                 else {
-                    userName = value.getString("name");
+                    userName = value.getString("pseudo");
                 }
             }
         });
@@ -160,7 +160,7 @@ public class ChatActivity extends AppCompatActivity {
             {
                 MessageRetrieve.add(doc.getId());
 
-                String chatName =(String) doc.get("name");
+                String chatName =(String) doc.get("pseudo");
                 String chatMessage =(String) doc.get("message");
                 String chatDate = (String) doc.get("date");
                 String chatTime = (String) doc.get("time");
@@ -191,7 +191,7 @@ public class ChatActivity extends AppCompatActivity {
             currentTime = currentTimeFormat.format(calForTime.getTime());
 
             HashMap<String,Object> messageInfoMap = new HashMap<>();
-            messageInfoMap.put("name",userName);
+            messageInfoMap.put("pseudo",userName);
             messageInfoMap.put("message",Message);
             messageInfoMap.put("date",currentDate);
             messageInfoMap.put("time",currentTime);

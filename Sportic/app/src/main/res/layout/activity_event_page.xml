@@ -93,6 +93,19 @@
         app:layout_constraintVertical_bias="0.658" />
 
     <Button
+        android:id="@+id/eventLeave"
+        android:layout_width="127dp"
+        android:layout_height="48dp"
+        android:text="Leave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.665"
+        tools:ignore="DuplicateClickableBoundsCheck" />
+
+    <Button
         android:id="@+id/EventJoin"
         android:layout_width="127dp"
         android:layout_height="48dp"
@@ -102,7 +115,8 @@
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.665"
+        tools:ignore="DuplicateClickableBoundsCheck" />
 
     <Button
         android:id="@+id/EventChat"

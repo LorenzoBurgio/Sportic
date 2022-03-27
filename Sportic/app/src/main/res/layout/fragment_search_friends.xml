@@ -19,7 +19,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:hint="Friend's name" />
+            android:hint="Friend's pseudo" />
 
         <Button
             android:id="@+id/ButtonSearchFriends"

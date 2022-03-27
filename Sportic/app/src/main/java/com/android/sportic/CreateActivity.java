@@ -159,7 +159,8 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         Map<String,Object> user = new HashMap<>();
-                        user.put("name",value.getString("name"));
+                        user.put("pseudo",value.getString("pseudo"));
+                        user.put("fullname",value.getString("fullname"));
                         documentReference.collection("Participants").document(userID).set(user);
                     }
                 });

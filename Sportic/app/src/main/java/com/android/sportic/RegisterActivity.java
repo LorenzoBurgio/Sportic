@@ -3,6 +3,7 @@ package com.android.sportic;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,18 +22,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText name,email,pwd;
+    EditText name,email,pwd,pseudo;
     Button register;
     FirebaseAuth fauth;
     FirebaseFirestore  fstore;
     String userID;
+    ArrayList<String> pseudonyme = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.etEmailR);
         pwd = (EditText) findViewById(R.id.etPasswordR);
         register = (Button) findViewById(R.id.RegisterR);
-
+        pseudo = (EditText) findViewById(R.id.Pseudo);
 
 
         fauth = FirebaseAuth.getInstance();
@@ -52,6 +60,26 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
+        ArrayList<String> listPseudo = new ArrayList<>();//retrieve the list of pseudo already taken
+        fstore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null){
+                    Iterator iterator = value.getDocuments().iterator();
+
+                    while (iterator.hasNext())
+                    {
+                        String data = ((QueryDocumentSnapshot)iterator.next()).getString("pseudo");
+                        listPseudo.add(data);
+                        if(data != null)
+                            Log.e("pseudo :",data);
+
+
+                    }
+                }
+            }
+        });
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +87,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String Email = email.getText().toString().trim();
                 String password = pwd.getText().toString().trim();
                 String Name = name.getText().toString().trim();
+                String Pseudo = pseudo.getText().toString().trim();
+
+                if(listPseudo.contains(Pseudo)){
+                    pseudo.setError("Pseudo is already taken");
+                    return;
+                }
 
                 //verify all the value
                 if (TextUtils.isEmpty(Email)){
@@ -70,12 +104,11 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 if (password.length() < 6 ){
-                    pwd.setError("Password must be >= § characters");
+                    pwd.setError("Password must be >= 6 characters");
                     return;
                 }
 
                 //register the user in firebase
-
                 fauth.createUserWithEmailAndPassword(Email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -85,7 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
                             //Write in DATABASE
                             DocumentReference documentReference = fstore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
-                            user.put("name",Name);
+                            user.put("fullname",Name);
+                            user.put("pseudo",Pseudo);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -103,5 +137,29 @@ public class RegisterActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private boolean isAlreadyTaken(String pseudo) {
+        ArrayList<String> listPseudo = new ArrayList<>();
+        fstore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null){
+                    Iterator iterator = value.getDocuments().iterator();
+
+                    while (iterator.hasNext())
+                    {
+                        String data = ((QueryDocumentSnapshot)iterator.next()).getString("pseudo");
+                        listPseudo.add(data);
+                        if(data != null)
+                            Log.e("pseudo :",data);
+
+
+                    }
+                }
+            }
+        });
+        Log.e("result", String.valueOf(listPseudo.contains(pseudo)));
+        return listPseudo.contains(pseudo);
     }
 }

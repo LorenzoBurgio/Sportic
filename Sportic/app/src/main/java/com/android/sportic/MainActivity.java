@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("DocumentSnapshot","Error:"+error.getMessage());
                 }
                 else {
-                    print.setText("Welcome " + value.getString("name"));
+                    print.setText("Welcome " + value.getString("fullname"));
                 }
             }
         });

@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -46,6 +47,8 @@ public class SearchFriendsFragment extends Fragment {
     ArrayList<String> Search;
     Button ButtonSearch;
 
+    ArrayList<String> MyPseudo = new ArrayList<>();
+
     View groupfragmentview;
 
     ArrayList<String> user_ID;
@@ -68,8 +71,17 @@ public class SearchFriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         groupfragmentview = inflater.inflate(R.layout.fragment_search_friends, container, false);
-
         initializeField();
+
+        fstore.collection("users").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null) {
+                    MyPseudo.clear();
+                    MyPseudo.add(value.getString("pseudo"));
+                }
+            }
+        });
 
 
         RetrieveAndDisplayGroups();
@@ -128,10 +140,10 @@ public class SearchFriendsFragment extends Fragment {
 
                     String test = Search.get(0);
                     QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
-                    String name = doc.getString("name");
+                    String name = doc.getString("pseudo");
                     String id = doc.getId();
 
-                    if(Search.contains(name) || Search.get(0) == "")
+                    if((Search.contains(name) || Search.get(0) == "") && !MyPseudo.contains(name))
                     {
                         user_ID.add(id);
                         user_Name.add(name);

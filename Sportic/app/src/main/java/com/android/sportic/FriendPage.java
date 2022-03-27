@@ -36,8 +36,14 @@ import java.util.Set;
 public class FriendPage extends AppCompatActivity {
 
     TextView friendsName;
+    TextView FriendsPseudo;
     Button AddFriends;
+    Button DeclineFriends;
+    Button DeleteInvit;
+    Button DeleteFriends;
+    Button AcceptFriends;
     Button chat;
+    TextView invitmessage;
 
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
@@ -64,8 +70,20 @@ public class FriendPage extends AppCompatActivity {
 
 
         friendsName = (TextView) findViewById(R.id.Friendsname);
+        invitmessage = findViewById(R.id.InvitMessage);
+        invitmessage.setVisibility(View.INVISIBLE);
+        FriendsPseudo = (TextView) findViewById(R.id.FriendsPseudo);
         AddFriends = (Button) findViewById(R.id.InvitButton);
+        AcceptFriends = (Button) findViewById(R.id.AcceptButton);
+        AcceptFriends.setVisibility(View.INVISIBLE);
+        DeleteFriends = (Button) findViewById(R.id.DeleteButton);
+        DeleteFriends.setVisibility(View.INVISIBLE);
+        DeclineFriends = (Button) findViewById(R.id.declineButton);
+        DeclineFriends.setVisibility(View.INVISIBLE);
+        DeleteInvit = (Button) findViewById(R.id.deleteInviteButton);
+        DeleteInvit.setVisibility(View.INVISIBLE);
         chat = (Button) findViewById(R.id.chatButton);
+        chat.setVisibility(View.INVISIBLE);
 
         listView = (ListView) findViewById(R.id.FriendsEvent);
         arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,List_of_Event);
@@ -85,8 +103,9 @@ public class FriendPage extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null){
-                    friendsName.setText(value.getString("name"));
-                    HisName = value.getString("name");
+                    friendsName.setText(value.getString("fullname"));
+                    FriendsPseudo.setText(value.getString("pseudo"));
+                    HisName = value.getString("pseudo");
                 }
 
             }
@@ -96,7 +115,7 @@ public class FriendPage extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null){
-                    MyName = value.getString("name");
+                    MyName = value.getString("pseudo");
                 }
 
             }
@@ -107,10 +126,54 @@ public class FriendPage extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null)
                 {
-                    if(value.getString("invitation") == null || !value.getString("invitation").equals("accepted"))
+                    Log.e("case","enter");
+                    if(value.getString("invitation") == null)
+                    {
+                        Log.e("case","null");
+                        AddFriends.setVisibility(View.VISIBLE);
                         chat.setVisibility(View.INVISIBLE);
-                    
-
+                        DeleteFriends.setVisibility(View.INVISIBLE);
+                        DeclineFriends.setVisibility(View.INVISIBLE);
+                        AcceptFriends.setVisibility(View.INVISIBLE);
+                        invitmessage.setVisibility(View.INVISIBLE);
+                        DeleteInvit.setVisibility(View.INVISIBLE);
+                    }
+                    else if(value.getString("invitation").equals("send"))
+                    {
+                        Log.e("case","send");
+                        Invitation = "send";
+                        DeleteInvit.setVisibility(View.VISIBLE);
+                        DeleteFriends.setVisibility(View.INVISIBLE);
+                        invitmessage.setVisibility(View.VISIBLE);
+                        AddFriends.setVisibility(View.INVISIBLE);
+                        chat.setVisibility(View.INVISIBLE);
+                        DeclineFriends.setVisibility(View.INVISIBLE);
+                        AcceptFriends.setVisibility(View.INVISIBLE);
+                    }
+                    else if(value.getString("invitation").equals("pending"))
+                    {
+                        Log.e("case","pending");
+                        Invitation = "pending";
+                        AcceptFriends.setVisibility(View.VISIBLE);
+                        DeclineFriends.setVisibility(View.VISIBLE);
+                        AddFriends.setVisibility(View.INVISIBLE);
+                        chat.setVisibility(View.INVISIBLE);
+                        DeleteFriends.setVisibility(View.INVISIBLE);
+                        invitmessage.setVisibility(View.INVISIBLE);
+                        DeleteInvit.setVisibility(View.INVISIBLE);
+                    }
+                    else if(value.getString("invitation").equals("accepted"))
+                    {
+                        Log.e("case","accepted");
+                        Invitation = "accepted";
+                        chat.setVisibility(View.VISIBLE);
+                        DeleteFriends.setVisibility(View.VISIBLE);
+                        DeclineFriends.setVisibility(View.INVISIBLE);
+                        AcceptFriends.setVisibility(View.INVISIBLE);
+                        AddFriends.setVisibility(View.INVISIBLE);
+                        invitmessage.setVisibility(View.INVISIBLE);
+                        DeleteInvit.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -138,6 +201,96 @@ public class FriendPage extends AppCompatActivity {
             }
         });
 
+        DeclineFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //delete invitation in both side
+                Myfriends.document(userID).delete();
+                Hisfriends.document(Myid).delete();
+            }
+        });
+
+        DeleteInvit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Myfriends.document(userID).delete();
+                Hisfriends.document(Myid).delete();
+            }
+        });
+
+        AcceptFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //set invitation to "accepted"
+                Myfriends.document(userID).update("invitation","accepted");
+                Hisfriends.document(Myid).update("invitation","accepted");
+                Map<String,Object> invit= new HashMap<>();
+                invit.put("message",0);
+                fstore.collection("FriendMessage").add(invit).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Myfriends.document(userID).update("message",documentReference.getId());
+                        Hisfriends.document(Myid).update("message",documentReference.getId());
+                    }
+                });
+            }
+        });
+
+        DeleteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //delete friends document in both side
+                Myfriends.document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value != null && value.getString("message") !=null) {
+                            fstore.collection("FriendMessage").document(value.getString("message")).delete();
+                        }
+                    }
+                });
+                Myfriends.document(userID).delete();
+                Hisfriends.document(Myid).delete();
+            }
+        });
+
+        AddFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Invitation = "null";
+
+                Myfriends.document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value != null && Invitation.equals("null")){
+                            Map<String,Object> invit= new HashMap<>();
+                            invit.put("invitation","send");// i set the invitation to send for say i send him an invit
+                            invit.put("pseudo",HisName);
+                            Myfriends.document(userID).set(invit);
+                        }
+
+                    }
+                });
+
+
+
+                Hisfriends.document(Myid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value != null && Invitation.equals("null"))
+                        {
+                            Map<String,Object> invit2= new HashMap<>();
+                            invit2.put("invitation","pending");//i set the invit to pending.
+                            invit2.put("pseudo",MyName);
+                            Hisfriends.document(Myid).set(invit2);
+                            Invitation = "send";
+                            Log.e("invitation","send");
+                        }
+                    }
+                });
+
+            }
+        });
+        /*
         AddFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +305,7 @@ public class FriendPage extends AppCompatActivity {
                             Log.e("invitation","null");
                             Map<String,Object> invit= new HashMap<>();
                             invit.put("invitation","send");// i set the invitation to send for say i send him an invit
-                            invit.put("name",HisName);
+                            invit.put("pseudo",HisName);
                             Myfriends.document(userID).set(invit);
 
                         }
@@ -186,13 +339,13 @@ public class FriendPage extends AppCompatActivity {
                         {
                             Map<String,Object> invit= new HashMap<>();
                             invit.put("invitation","pending");//i set the invit to pending.
-                            invit.put("name",MyName);
+                            invit.put("pseudo",MyName);
                             Hisfriends.document(Myid).set(invit);
                         }
                     }
                 });
             }
-        });
+        });*/
 
 
     }

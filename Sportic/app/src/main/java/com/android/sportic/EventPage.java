@@ -42,6 +42,7 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
 
     private Button chat;
     private Button EventJoin;
+    private Button EventLeave;
     private String EventName;
     private TextView Eventname;
     private TextView EventAdress;
@@ -79,7 +80,8 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
 
         chat = (Button) findViewById(R.id.EventChat);
         EventJoin = (Button) findViewById(R.id.EventJoin);
-
+        EventLeave = (Button) findViewById(R.id.eventLeave);
+        EventLeave.setVisibility(View.INVISIBLE);
         Eventname = (TextView) findViewById(R.id.EventName);
         Eventname.setText(EventName);
         EventAdress = (TextView) findViewById(R.id.EventAdress);
@@ -92,6 +94,28 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
         EventParticipant.setAdapter(arrayAdapter);
 
         RetrieveAndDisplayParticipant();
+
+        fstore.collection("users").document(userID).collection("MyEvent").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null)
+                {
+                    Log.d("DocumentSnapshot","Error:"+error.getMessage());
+                    return;
+                }
+                Iterator iterator = value.getDocuments().iterator();
+
+                while (iterator.hasNext())
+                {
+                    QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
+                    if(doc.getId().equals(EventName))
+                    {
+                        EventJoin.setVisibility(View.INVISIBLE);
+                        EventLeave.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
 
         Event.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -110,10 +134,6 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
         });
 
 
-
-
-
-
         EventJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +141,8 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         Map<String,Object> user = new HashMap<>();
-                        user.put("name",value.getString("name"));
+                        user.put("pseudo",value.getString("pseudo"));
+                        user.put("fullname",value.getString("fullname"));
                         Event.collection("Participants").document(userID).set(user);
                     }
                 });
@@ -129,6 +150,16 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                 Map<String,Object> MyEvent = new HashMap<>();
                 MyEvent.put("name",EventName);
                 fstore.collection("users").document(userID).collection("MyEvent").document(EventName).set(MyEvent);
+            }
+        });
+
+        EventLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Event.collection("Participants").document(userID).delete();
+                fstore.collection("users").document(userID).collection("MyEvent").document(EventName).delete();
+                EventJoin.setVisibility(View.VISIBLE);
+                EventLeave.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -159,7 +190,7 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                 {
                     QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
 
-                    set.add(doc.getString("name"));
+                    set.add(doc.getString("pseudo"));
 
                 }
 

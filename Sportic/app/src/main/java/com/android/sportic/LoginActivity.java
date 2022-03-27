@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
             }
         });
 
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 if (password.length() < 6 ){
-                    pwd.setError("Password must be >= § characters");
+                    pwd.setError("Password must be >= 6 characters");
                     return;
                 }
 

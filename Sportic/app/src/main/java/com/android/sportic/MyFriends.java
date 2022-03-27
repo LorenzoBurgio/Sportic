@@ -103,11 +103,13 @@ public class MyFriends extends Fragment {
                 {
                     QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
                     String id = doc.getId();
-                    if (doc.getString("invitation").equals("accepted")){
-                        set.add(doc.getString("name"));
-                        user_ID.add(id);
-                        user_Name.add(doc.getString("name"));
+                    if(doc.getString("invitation") != null) {
+                        if (doc.getString("invitation").equals("accepted")) {
+                            set.add(doc.getString("pseudo"));
+                            user_ID.add(id);
+                            user_Name.add(doc.getString("pseudo"));
 
+                        }
                     }
                 }
 

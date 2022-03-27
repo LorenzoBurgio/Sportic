@@ -44,6 +44,7 @@ public class EventFragment extends Fragment {
 
     EditText search;
     ArrayList<String> Search;
+    ArrayList<String> MyEvent = new ArrayList<>();
     Button ButtonSearch;
 
     View groupfragmentview;
@@ -65,8 +66,24 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         groupfragmentview = inflater.inflate(R.layout.fragment_event, container, false);
-
         initializeField();
+
+        fstore.collection("users").document(userID).collection("MyEvent").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null)
+                {
+                    Log.d("DocumentSnapshot","Error:"+error.getMessage());
+                    return;
+                }
+                Iterator iterator = value.getDocuments().iterator();
+                while (iterator.hasNext())
+                {
+                    QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
+                    MyEvent.add(doc.getId());
+                }
+            }
+        });
 
 
         RetrieveAndDisplayGroups();
@@ -119,11 +136,10 @@ public class EventFragment extends Fragment {
                 {
                     String test = Search.get(0);
                     String data = ((QueryDocumentSnapshot)iterator.next()).getId();
-                    if(Search.contains(data) || Search.get(0) == "")
+                    if((Search.contains(data) || Search.get(0) == "") && !MyEvent.contains(data))
                     {
                         set.add(data);
                     }
-
                 }
 
 
