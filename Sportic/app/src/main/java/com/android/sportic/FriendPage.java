@@ -54,7 +54,7 @@ public class FriendPage extends AppCompatActivity {
     String Myid;
     String MyName;
     String HisName;
-    boolean havefriends;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +99,19 @@ public class FriendPage extends AppCompatActivity {
                     MyName = value.getString("name");
                 }
 
+            }
+        });
+
+        fstore.collection("users").document(Myid).collection("MyFriends").document(userID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null)
+                {
+                    if(value.getString("invitation") == null || !value.getString("invitation").equals("accepted"))
+                        chat.setVisibility(View.INVISIBLE);
+                    
+
+                }
             }
         });
 
