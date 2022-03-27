@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".FriendChat"
+            android:exported="false" />
+        <activity
             android:name=".FriendPage"
             android:exported="false" />
         <activity

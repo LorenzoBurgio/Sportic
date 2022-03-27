@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatActivity">
+    tools:context=".FriendChat">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/my_scroll_view"
+            android:id="@+id/friend_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/myLinearLayout"
@@ -24,7 +24,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/chat_text_display"
+                    android:id="@+id/friend_text_display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -47,7 +47,7 @@
             >
 
             <EditText
-                android:id="@+id/input_message"
+                android:id="@+id/friend_input_message"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Write a message..."
@@ -55,7 +55,7 @@
                 />
 
             <Button
-                android:id="@+id/send_message_button"
+                android:id="@+id/friend_send_message_button"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 tools:ignore="SpeakableTextPresentCheck" />

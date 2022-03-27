@@ -102,6 +102,16 @@ public class FriendPage extends AppCompatActivity {
             }
         });
 
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(getApplicationContext(),FriendChat.class);
+                chat.putExtra("MyId",Myid);
+                chat.putExtra("HisId",userID);
+                startActivity(chat);
+            }
+        });
+
 
         RetrieveAndDisplayGroups();
 
@@ -139,6 +149,16 @@ public class FriendPage extends AppCompatActivity {
                             //accept the invitation
                             Myfriends.document(userID).update("invitation","accepted");// so i accept the invitation
                             Hisfriends.document(Myid).update("invitation","accepted");
+                            Map<String,Object> invit= new HashMap<>();
+                            invit.put("message",0);
+                            fstore.collection("FriendMessage").add(invit).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Myfriends.document(userID).update("message",documentReference.getId());
+                                    Hisfriends.document(Myid).update("message",documentReference.getId());
+                                }
+                            });
+
 
                         }
                     }
@@ -147,6 +167,8 @@ public class FriendPage extends AppCompatActivity {
                 Hisfriends.document(Myid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(value == null)
+                            return;
                         if(value.getString("invitation") == null)// if the value is null => i never send him an invit.
                         {
                             Map<String,Object> invit= new HashMap<>();
