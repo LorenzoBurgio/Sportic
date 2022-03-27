@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     public void SearchEvent(View view){
         startActivity(new Intent(getApplicationContext(),SearchActivity.class));
     }
+    public void Friends(View view){
+        startActivity(new Intent(getApplicationContext(),Friends.class));
+    }
 
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();

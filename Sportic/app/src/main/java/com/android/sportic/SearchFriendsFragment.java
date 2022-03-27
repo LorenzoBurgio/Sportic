@@ -28,10 +28,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 
-public class EventFragment extends Fragment {
+public class SearchFriendsFragment extends Fragment {
 
     ListView List_view;
     ArrayAdapter<String> arrayAdapter;
@@ -39,7 +40,6 @@ public class EventFragment extends Fragment {
 
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
-    CollectionReference Event;
     String userID;
 
     EditText search;
@@ -48,7 +48,10 @@ public class EventFragment extends Fragment {
 
     View groupfragmentview;
 
-    public EventFragment() {
+    ArrayList<String> user_ID;
+    ArrayList<String> user_Name;
+
+    public SearchFriendsFragment() {
         // Required empty public constructor
     }
 
@@ -64,12 +67,14 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        groupfragmentview = inflater.inflate(R.layout.fragment_event, container, false);
+        groupfragmentview = inflater.inflate(R.layout.fragment_search_friends, container, false);
 
         initializeField();
 
 
         RetrieveAndDisplayGroups();
+
+
 
         ButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,16 +92,16 @@ public class EventFragment extends Fragment {
             }
         });
 
-
-
-
         List_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String EventName = adapterView.getItemAtPosition(i).toString();
-                Intent Event = new Intent(getContext(),EventPage.class);
-                Event.putExtra("EventName",EventName);
-                startActivity(Event);
+                String UserName = adapterView.getItemAtPosition(i).toString();
+                int id = Get_Id(UserName,user_Name);
+                String ide = user_ID.get(id);
+                Log.e("id",ide);
+                Intent friends = new Intent(getContext(),FriendPage.class);
+                friends.putExtra("UserName",ide);
+                startActivity(friends);
             }
         });
 
@@ -104,7 +109,7 @@ public class EventFragment extends Fragment {
     }
 
     private void RetrieveAndDisplayGroups() {
-        fstore.collection("Event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        fstore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null)
@@ -115,13 +120,23 @@ public class EventFragment extends Fragment {
                 Set<String> set = new HashSet<>();
                 Iterator iterator = value.getDocuments().iterator();
 
+                user_ID.clear();
+                user_Name.clear();
+
                 while (iterator.hasNext())
                 {
+
                     String test = Search.get(0);
-                    String data = ((QueryDocumentSnapshot)iterator.next()).getId();
-                    if(Search.contains(data) || Search.get(0) == "")
+                    QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
+                    String name = doc.getString("name");
+                    String id = doc.getId();
+
+                    if(Search.contains(name) || Search.get(0) == "")
                     {
-                        set.add(data);
+                        user_ID.add(id);
+                        user_Name.add(name);
+
+                        set.add(name);
                     }
 
                 }
@@ -135,6 +150,17 @@ public class EventFragment extends Fragment {
         });
     }
 
+    private int Get_Id(String name, List<String> user_Name){
+        int i = 0;
+
+        for (;i < user_ID.size();i++){
+            if (name == user_Name.get(i))
+                return i;
+        }
+
+        return i;
+    }
+
     private void initializeField() {
         fauth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
@@ -143,10 +169,13 @@ public class EventFragment extends Fragment {
         Search = new ArrayList<>();
         Search.add("");
 
-        search = (EditText) groupfragmentview.findViewById(R.id.TextSearchEvent);
-        ButtonSearch = (Button) groupfragmentview.findViewById(R.id.ButtonSearchEvent);
+        user_ID = new ArrayList<>();
+        user_Name = new ArrayList<>();
 
-        List_view = (ListView) groupfragmentview.findViewById(R.id.list_view_search);
+        search = (EditText) groupfragmentview.findViewById(R.id.TextSearchFriends);
+        ButtonSearch = (Button) groupfragmentview.findViewById(R.id.ButtonSearchFriends);
+
+        List_view = (ListView) groupfragmentview.findViewById(R.id.list_view_friends);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,List_of_groups);
         List_view.setAdapter(arrayAdapter);
 

@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".FriendPage"
+            android:exported="false" />
+        <activity
+            android:name=".Friends"
+            android:exported="false" />
+        <activity
             android:name=".Event"
             android:exported="false" />
         <activity
@@ -25,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyA9qDDGcgxjbFYUbsDC0H1fnbkctaoilWs" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -35,9 +41,6 @@
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EventList"
             android:exported="false" />
         <activity
             android:name=".CreateActivity"

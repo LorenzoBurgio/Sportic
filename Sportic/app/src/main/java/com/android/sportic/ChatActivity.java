@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private Toolbar mtoolbar;
+
     private Button sendButton;
     private EditText userMessageInput;
     private ScrollView mscrollView;
