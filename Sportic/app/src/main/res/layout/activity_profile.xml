@@ -193,34 +193,19 @@
             tools:layout_editor_absoluteX="98dp"
             tools:layout_conversion_absoluteWidth="215dp" />
 
-        <TextView
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_btn"
-            android:drawableLeft="@drawable/ic_edit"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:text="Edit Profile"
-            android:textColor="@color/purple_200"
-            android:textSize="18dp"
-            tools:layout_conversion_absoluteHeight="50dp"
-            tools:layout_conversion_absoluteWidth="180dp"
-            tools:layout_editor_absoluteX="106dp"
-            tools:layout_editor_absoluteY="558dp" />
-
         <Button
             android:id="@+id/button"
             android:layout_width="145dp"
-            android:layout_height="26dp"
+            android:layout_height="wrap_content"
             android:backgroundTintMode="screen"
             android:baselineAligned="false"
-            android:text="Button"
-            android:visibility="invisible"
+            android:text="Edit Profile"
+            android:visibility="visible"
             tools:layout_conversion_absoluteHeight="50dp"
             tools:layout_conversion_absoluteWidth="180dp"
             tools:layout_editor_absoluteX="115dp"
             tools:layout_editor_absoluteY="608dp"
-            tools:visibility="invisible" />
+            tools:visibility="visible" />
 
     </LinearLayout>
 </LinearLayout>
