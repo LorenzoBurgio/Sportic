@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".EditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".FriendChat"
             android:exported="false" />
         <activity
