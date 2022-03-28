@@ -37,8 +37,7 @@ public class ProfileActivity extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        setContentView(R.layout.activity_edit_profile);
-        setContentView(R.layout.activity_main);
+        /*
         fauth = FirebaseAuth.getInstance();
         imageView = findViewById(R.id.image_view);
         OpenCamera = findViewById(R.id.camera);
@@ -63,8 +62,10 @@ public class ProfileActivity extends AppCompatActivity{
                             },100);
         }
 
-
+*/
     }
+
+
 
     /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
