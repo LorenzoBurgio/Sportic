@@ -17,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sportic">
         <activity
+            android:name=".SportAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".SportList"
+            android:exported="false" />
+        <activity
+            android:name=".SportEventList"
+            android:exported="false" />
+        <activity
             android:name=".EditProfile"
             android:exported="false" />
         <activity

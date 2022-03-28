@@ -83,4 +83,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
     }
 
+    public void sport (View view){
+        startActivity(new Intent(getApplicationContext(),SportList.class));
+    }
+
 }
