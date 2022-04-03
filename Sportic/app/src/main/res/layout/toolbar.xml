@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -11,11 +12,12 @@
         android:id="@+id/linear_ll"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
-            android:layout_alignParentLeft="true"/>
+            tools:ignore="SpeakableTextPresentCheck"
+            android:id="@+id/quitPage"/>
 
         <TextView
             android:layout_weight="1"
@@ -26,16 +28,6 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textColor="@android:color/darker_gray"
-            android:layout_alignParentRight="true"
-            android:textStyle="normal"
-            android:textSize="15dp"
             />
 
     </LinearLayout>

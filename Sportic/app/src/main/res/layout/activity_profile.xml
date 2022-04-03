@@ -19,11 +19,11 @@
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/fullName"
+            android:id="@+id/editfullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Location"
+            android:text="City"
             android:textColor="@color/purple_500"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -194,7 +194,7 @@
             tools:layout_conversion_absoluteWidth="215dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/edit_profile"
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:backgroundTintMode="screen"

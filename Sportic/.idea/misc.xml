@@ -6,7 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.154" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.21784420289855072" />
         <entry key="app/src/main/res/layout/activity_create.xml" value="0.24852657594542577" />
-        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.28125" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.25412541254125415" />
         <entry key="app/src/main/res/layout/activity_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_event_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_event_page.xml" value="0.19345703125000002" />
@@ -17,7 +17,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.21784420289855072" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.29483695652173914" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2562567227128623" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_sport_event_list.xml" value="0.29483695652173914" />
@@ -31,9 +31,6 @@
       </map>
     </option>
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml" />
-  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
@@ -43,7 +40,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.21784420289855072" />
+        <option name="scale" value="0.25412541254125415" />
       </ProjectState>
     </option>
   </component>

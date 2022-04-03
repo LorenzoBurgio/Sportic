@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/CreateEvent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -79,8 +79,8 @@
         android:layout_marginTop="28dp"
         android:onClick="Friends"
         android:text="Friends"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile" />
 
     <Button
         android:id="@+id/button3"
@@ -100,6 +100,6 @@
         android:layout_marginBottom="11dp"
         android:onClick="sport"
         android:text="Sport"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/edit_profile"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
