@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,7 +34,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText name,email,pwd,pseudo;
+    EditText firstname,lastname,email,pwd,pseudo;
     Button register;
     FirebaseAuth fauth;
     FirebaseFirestore  fstore;
@@ -46,7 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        name = (EditText) findViewById(R.id.etNameR);
+        lastname = (EditText) findViewById(R.id.lastname);
+        firstname = (EditText) findViewById(R.id.firstname);
         email = (EditText) findViewById(R.id.etEmailR);
         pwd = (EditText) findViewById(R.id.etPasswordR);
         register = (Button) findViewById(R.id.RegisterR);
@@ -86,7 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String Email = email.getText().toString().trim();
                 String password = pwd.getText().toString().trim();
-                String Name = name.getText().toString().trim();
+                String Firstname = firstname.getText().toString().trim();
+                String Lastname = lastname.getText().toString().trim();
                 String Pseudo = pseudo.getText().toString().trim();
 
                 if(listPseudo.contains(Pseudo)){
@@ -97,6 +98,14 @@ public class RegisterActivity extends AppCompatActivity {
                 //verify all the value
                 if (TextUtils.isEmpty(Email)){
                     email.setError("Email is required.");
+                    return;
+                }
+                if (TextUtils.isEmpty(Firstname)){
+                    firstname.setError("First Name is required.");
+                    return;
+                }
+                if (TextUtils.isEmpty(Lastname)){
+                    lastname.setError("Last Name is required.");
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
@@ -118,7 +127,8 @@ public class RegisterActivity extends AppCompatActivity {
                             //Write in DATABASE
                             DocumentReference documentReference = fstore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
-                            user.put("fullname",Name);
+                            user.put("firstname",Firstname);
+                            user.put("lastname",Lastname);
                             user.put("pseudo",Pseudo);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

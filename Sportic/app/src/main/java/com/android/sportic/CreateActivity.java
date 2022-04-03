@@ -52,7 +52,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CreateActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class
+CreateActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     FirebaseAuth fauth;
     FirebaseFirestore fstore;
@@ -160,7 +161,6 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         Map<String,Object> user = new HashMap<>();
                         user.put("pseudo",value.getString("pseudo"));
-                        user.put("fullname",value.getString("fullname"));
                         documentReference.collection("Participants").document(userID).set(user);
                     }
                 });

@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         userID = fauth.getCurrentUser().getUid();
 
+        if(fauth.getCurrentUser() == null){
+            startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+            finish();
+        }
+
+
         //read in DATABASE
         DocumentReference documentReference = fstore.collection("users").document(userID);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {

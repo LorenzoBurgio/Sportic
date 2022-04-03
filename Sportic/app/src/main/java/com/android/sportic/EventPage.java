@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,6 +62,9 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
     FirebaseFirestore fstore;
     String userID;
 
+    ArrayList<String> user_ID;
+    ArrayList<String> user_Name;
+
 
 
 
@@ -69,6 +73,9 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_page);
         initMap();
+
+        user_ID = new ArrayList<>();
+        user_Name = new ArrayList<>();
 
         EventName = getIntent().getExtras().get("EventName").toString();
 
@@ -142,7 +149,6 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         Map<String,Object> user = new HashMap<>();
                         user.put("pseudo",value.getString("pseudo"));
-                        user.put("fullname",value.getString("fullname"));
                         Event.collection("Participants").document(userID).set(user);
                     }
                 });
@@ -171,6 +177,19 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                 startActivity(Event);
             }
         });
+
+        EventParticipant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String UserName = adapterView.getItemAtPosition(i).toString();
+                int id = Get_Id(UserName,user_Name);
+                String ide = user_ID.get(id);
+                Log.e("id",ide);
+                Intent friends = new Intent(getApplicationContext(),FriendPage.class);
+                friends.putExtra("UserName",ide);
+                startActivity(friends);
+            }
+        });
     }
 
     private void RetrieveAndDisplayParticipant() {
@@ -189,8 +208,10 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
                 while (iterator.hasNext())
                 {
                     QueryDocumentSnapshot doc = (QueryDocumentSnapshot) iterator.next();
-
+                    String id = doc.getId();
                     set.add(doc.getString("pseudo"));
+                    user_ID.add(id);
+                    user_Name.add(doc.getString("pseudo"));
 
                 }
 
@@ -218,5 +239,16 @@ public class EventPage extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+    }
+
+    private int Get_Id(String name, List<String> user_Name){
+        int i = 0;
+
+        for (;i < user_ID.size();i++){
+            if (name == user_Name.get(i))
+                return i;
+        }
+
+        return i;
     }
 }

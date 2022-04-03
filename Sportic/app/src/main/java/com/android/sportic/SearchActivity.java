@@ -77,7 +77,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
 
         getLocationPermition();
 
-        PrintAllEvent();
+
 
         seeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,6 +218,7 @@ public class SearchActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        PrintAllEvent();
         Toast.makeText(this, "MAP is ready",Toast.LENGTH_SHORT).show();
         Log.e("onMapReady","Map is Ready");
 

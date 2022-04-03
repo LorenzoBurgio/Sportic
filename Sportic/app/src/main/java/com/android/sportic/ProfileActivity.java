@@ -1,13 +1,11 @@
 package com.android.sportic;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -24,10 +22,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -41,7 +37,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 public class ProfileActivity extends AppCompatActivity{
 
@@ -93,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity{
                 {
                     String firstName = value.getString("firstname");
                     String lastName = value.getString("lastname");
+                    String pseudo = value.getString("pseudo");
                     String location = value.getString("city");
                     if (user.getPhotoUrl()!=null)
                     {
@@ -128,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity{
                     {
                         Location.setText(location);
                     }
-                    FullName.setText(FirstName.getText().toString() + " " + LastName.getText().toString());
+                    FullName.setText(pseudo);
                 }
             }
         });

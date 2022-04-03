@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,10 +39,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class EditProfile extends AppCompatActivity {
     Button ValidateProfile;
@@ -92,6 +87,7 @@ public class EditProfile extends AppCompatActivity {
                     String firstName = value.getString("firstname");
                     String lastName = value.getString("lastname");
                     String Location = value.getString("city");
+                    String pseudo = value.getString("pseudo");
                     if (user.getPhotoUrl()!=null)
                     {
                         Glide.with(EditProfile.this)
@@ -125,7 +121,7 @@ public class EditProfile extends AppCompatActivity {
                     {
                         location.setText(Location);
                     }
-                    fullname.setText(firstname.getText().toString() + " " + lastname.getText().toString());
+                    fullname.setText(pseudo);
                 }
             }
         });
