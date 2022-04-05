@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "824731601025",
+    "project_id": "sportic-d1a00",
+    "storage_bucket": "sportic-d1a00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824731601025:android:3d55a2b4637bf56d10e580",
+        "android_client_info": {
+          "package_name": "com.android.sportic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824731601025-b73n0q0v2kcpgjhbm5jaa7h9kbb9ik18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxTl2yN4WUP6V890rKGBfKKENOFlJ2ZX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824731601025-b73n0q0v2kcpgjhbm5jaa7h9kbb9ik18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
