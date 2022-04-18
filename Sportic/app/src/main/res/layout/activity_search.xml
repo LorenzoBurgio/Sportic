@@ -10,6 +10,7 @@
         android:id="@+id/ViewEvent"
         android:layout_width="183dp"
         android:layout_height="48dp"
+        android:backgroundTint="#FF9800"
         android:text="See Event"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

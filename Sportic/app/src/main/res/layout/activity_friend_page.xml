@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="John Doe"
-            android:textColor="@color/purple_200"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -72,6 +72,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_person" />
 
         <TextView
@@ -79,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="Last Name"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -112,6 +113,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_location" />
 
         <TextView
@@ -119,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="City"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -152,6 +154,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_person" />
 
         <TextView
@@ -159,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="First Name"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -179,6 +182,7 @@
         android:id="@+id/chatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
         android:text="CHAT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -191,6 +195,7 @@
         android:id="@+id/declineButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
         android:text="Decline invit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -203,6 +208,7 @@
         android:id="@+id/deleteInviteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
         android:text="Delete Invit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,6 +222,7 @@
         android:id="@+id/AcceptButton"
         android:layout_width="159dp"
         android:layout_height="44dp"
+        android:backgroundTint="#FF9800"
         android:text="Accept friend"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -229,6 +236,7 @@
         android:id="@+id/DeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
         android:text="Delete friends"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -249,7 +257,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.56"
-        tools:ignore="DuplicateClickableBoundsCheck" />
+        tools:ignore="DuplicateClickableBoundsCheck"
+        android:backgroundTint="#FF9800" />
 
     <TextView
         android:id="@+id/InvitMessage"

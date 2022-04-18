@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/myLinearLayout"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,13 +27,13 @@
                     android:id="@+id/chat_text_display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textAllCaps="false"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/background_dark"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
-                    android:layout_marginBottom="50dp" />
+                    android:layout_marginBottom="50dp"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="20sp" />
             </LinearLayout>
         </ScrollView>
 
@@ -56,9 +56,11 @@
 
             <Button
                 android:id="@+id/send_message_button"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:backgroundTint="#FF9800"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:text="Send" />
 
         </LinearLayout>
     </RelativeLayout>

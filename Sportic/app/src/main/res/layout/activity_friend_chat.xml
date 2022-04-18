@@ -56,8 +56,10 @@
 
             <Button
                 android:id="@+id/friend_send_message_button"
-                android:layout_width="50dp"
+                android:layout_width="109dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
+                android:text="send"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>

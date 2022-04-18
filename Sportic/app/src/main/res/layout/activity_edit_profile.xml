@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FF9800"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <include
         layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="John Doe"
-            android:textColor="@color/purple_200"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -56,14 +57,16 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_person" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:backgroundTint="#FF9800"
             android:text="First Name"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -101,14 +104,16 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_person" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:backgroundTint="#FF9800"
             android:text="Last Name"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -146,14 +151,16 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:background="#FF9800"
             android:src="@drawable/ic_location" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:backgroundTint="#FF9800"
             android:text="City"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -179,30 +186,32 @@
         android:background="@android:color/darker_gray" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
 
         <Button
             android:id="@+id/open_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FF9800"
             android:drawableLeft="@drawable/ic_photo_24"
             android:text="Change Picture"
             app:strokeColor="#FFB995E3"
             tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_editor_absoluteY="510dp"
+            tools:layout_conversion_absoluteWidth="215dp"
             tools:layout_editor_absoluteX="98dp"
-            tools:layout_conversion_absoluteWidth="215dp" />
+            tools:layout_editor_absoluteY="510dp" />
 
         <Button
             android:id="@+id/validateProfile"
             android:layout_width="145dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FF9800"
             android:backgroundTintMode="screen"
             android:baselineAligned="false"
             android:text="Validate Profile"

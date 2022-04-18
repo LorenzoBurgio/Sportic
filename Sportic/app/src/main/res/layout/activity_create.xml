@@ -25,6 +25,7 @@
         android:layout_width="180dp"
         android:layout_height="48dp"
         android:layout_marginBottom="48dp"
+        android:backgroundTint="#FF9800"
         android:text="Create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,7 +9,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/FriendsTab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="#FF9800"
+        app:tabTextColor="#FF9800">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/MyEvent"
