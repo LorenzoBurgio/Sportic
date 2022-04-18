@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
@@ -13,6 +23,7 @@
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Sportic"
+        android:textColor="#FF9800"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="#FF9800"
         android:ems="10"
+        android:foregroundTint="#FF9800"
         android:hint="Last Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColor="#FF9800"
         app:layout_constraintStart_toStartOf="@+id/firstname"
         app:layout_constraintTop_toBottomOf="@+id/firstname" />
 
@@ -37,10 +51,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="1dp"
+        android:backgroundTint="#FF9800"
         android:ems="10"
+        android:foregroundTint="#FF9800"
         android:hint="Enter Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textColor="#FF9800"
         app:layout_constraintEnd_toEndOf="@+id/lastname"
         app:layout_constraintTop_toBottomOf="@+id/lastname" />
 
@@ -49,10 +66,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
+        android:backgroundTint="#FF9800"
         android:ems="10"
+        android:foregroundTint="#FF9800"
         android:hint="Enter Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="#FF9800"
         app:layout_constraintStart_toStartOf="@+id/etEmailR"
         app:layout_constraintTop_toBottomOf="@+id/etEmailR" />
 
@@ -61,7 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
+        android:backgroundTint="#FF9800"
         android:text="REGISTER"
+        app:iconTint="#FF9800"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasswordR" />
@@ -71,10 +93,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
+        android:backgroundTint="#FF9800"
         android:ems="10"
+        android:foregroundTint="#FF9800"
         android:hint="Pseudo"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColor="#FF9800"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -84,10 +109,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:backgroundTint="#FF9800"
         android:ems="10"
+        android:foregroundTint="#FF9800"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColor="#FF9800"
         app:layout_constraintStart_toStartOf="@+id/Pseudo"
         app:layout_constraintTop_toBottomOf="@+id/Pseudo" />
 
